@@ -32,19 +32,4 @@ var locationKey = 347629;
 let apiURL = accuWeatherGetCurrentConditionsURL + locationKey + "?apikey=" + accuWeatherAPIKey;
 console.log('apiURL=' + apiURL);
 
-// async function requestWeather(apiURL) {
-//     try {
-//         const response = await got(apiURL);
-//         //console.log(response.body);
-//         return response.body;
-//     } catch (error) {
-//         console.log(error.response.body);
-//         //TODO: handle errors here
-//         //=> 'Internal server error ...'
-//         return "error";
-//     }
-// }
-
-//requestWeather(apiURL).then(console.log);
-//requestWeather(apiURL).then(JSON.parse).then(constructWeatherAlertMessage).then(console.log);
 webServiceInvoker.invokeWebService(apiURL).then(JSON.parse).then(constructWeatherAlertMessage).then(console.log);
