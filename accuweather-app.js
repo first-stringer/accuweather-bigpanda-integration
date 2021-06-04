@@ -3,7 +3,6 @@
 
 // Public modules
 const propertiesReader = require('properties-reader');
-//const got = require('got');
 const webServiceInvoker = require('./web-service-invoker');
 
 // My code

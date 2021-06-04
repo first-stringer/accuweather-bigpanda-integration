@@ -10,6 +10,7 @@ const app = Consumer.create({
         ++messagesProcessedCount;
         logger.info("messagesProcessedCount=" + messagesProcessedCount);
         logger.debug(JSON.stringify(message, null, "  "));
+        //TODO: Add if statement here to fail some messages to they go to the dead letter queue
         //TODO: Call BigPanda service.
     }
 });

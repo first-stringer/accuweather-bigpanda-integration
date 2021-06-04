@@ -2,6 +2,7 @@
   "dependencies": {
     "aws-sdk": "^2.921.0",
     "got": "^11.8.2",
+    "node-fetch": "^2.6.1",
     "properties-reader": "^2.2.0",
     "split-array": "^1.0.1",
     "sqs-consumer": "^5.5.0",
