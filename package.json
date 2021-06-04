@@ -4,6 +4,9 @@
     "got": "^11.8.2",
     "properties-reader": "^2.2.0",
     "split-array": "^1.0.1",
-    "uuid": "^3.3.2"
+    "sqs-consumer": "^5.5.0",
+    "sqs-producer": "^2.1.0",
+    "uuid": "^3.3.2",
+    "winston": "^3.3.3"
   }
 }
