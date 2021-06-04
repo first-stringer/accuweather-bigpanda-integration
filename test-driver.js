@@ -13,9 +13,12 @@
 // queueService.sendMessage("mymessageooo").then(console.log);
 
 // WEB SERVICE INVOKER TEST
-const webServiceInvoker = require('./web-service-invoker');
-const apiURL = "https://api.bigpanda.io/data/v2/alerts";
-console.log('apiURL=' + apiURL);
+//const webServiceInvoker = require('./web-service-invoker');
+//const apiURL = "https://api.bigpanda.io/data/v2/alerts";
+//console.log('apiURL=' + apiURL);
 //webServiceInvoker.invokeBPWebService(apiURL).then(JSON.parse).then(console.log);
 //webServiceInvoker.invokeBPWebService(apiURL).then(console.log);
-webServiceInvoker.invokeBPWebService(apiURL);
+//webServiceInvoker.invokeBPWebService(apiURL);
+
+console.log(process.env.BIGPANDA_APP_KEY);
+console.log(process.env.ACCUWEATHER_API_KEY);
