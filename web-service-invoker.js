@@ -5,17 +5,18 @@ const got = require('got');
 const fetch = require('node-fetch');
 
 const invokeWebService = async function (apiURL) {
-    logger.debug(apiURL);
-    try {
-        const response = await got(apiURL);
-        logger.debug(response.body);
-        return response.body;
-    } catch (error) {
-        logger.error(error.response.body);
-        //TODO: handle errors here
-        //=> 'Internal server error ...'
-        return "error";
-    }
+    logger.debug("invokeWebService-apiURL=" + apiURL);
+    // try {
+    let response = await got(apiURL);
+    //    logger.debug("invokeWebService-response.body=" + JSON.stringify(response));
+    //return response.body;
+    return response;
+    // } catch (error) {
+    //     logger.error(error.response.body);
+    //     //TODO: handle errors here
+    //     //=> 'Internal server error ...'
+    //     return "error";
+    // }
 }
 
 const invokeBPWebService = async function (apiURL) {
@@ -52,7 +53,7 @@ const invokeBPWebService = async function (apiURL) {
         my_unique_attribute: "myuniquevalue"
     };
     //logger.debug(payload);
-    console.log("payload="+payload);
+    console.log("payload=" + payload);
     console.log(payload);
     // try {
     //     //const response = await got(apiURL);

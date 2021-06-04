@@ -3,6 +3,7 @@
 // Public modules
 const logger = require('./utilities/logger');
 const propertiesReader = require('properties-reader');
+const fetch = require('node-fetch');
 
 // My code
 const webServiceInvoker = require('./web-service-invoker');
@@ -43,17 +44,41 @@ async function fetchWeather(locationKey, apiURL, apiKey) {
 
 async function processLocationKeys(locationKeys, apiURL, apiKey) {
     Object.keys(locationKeysJSON).forEach(function (key) {
-        logger.debug("key=" + key);
+        logger.debug("processLocationKeys-key=" + key);
         var value = locationKeysJSON[key];
-        logger.debug("value.CityName=" + value.CityName);
-        logger.debug("value.LocationKey=" + value.LocationKey);
+        logger.debug("processLocationKeys-value.CityName=" + value.CityName);
+        logger.debug("processLocationKeys-value.LocationKey=" + value.LocationKey);
 
-        fetchWeather(value.LocationKey, apiURL, apiKey)
+        let completeAPIURL = apiURL + value.LocationKey + "?apikey=" + apiKey;
+        logger.debug('processLocationKeys-completeAPIURL=' + completeAPIURL);
+
+        // webServiceInvoker.invokeWebService(completeAPIURL)
+        //     //.then(response => response.ok ? response : (function () { throw response }()))
+        //    // .then(response => response.json())
+        //     //.then(response => console.log('uuu' + response.ok))
+        //     .then(response => response.ok)
+        //     .then(console.log)
+        //     //.then(console.log('xxx'))
+        //     //.then(json => JSON.stringify(json, null, 4))
+        //     //.then(console.log)
+        //     //.then(publishMessage)
+        //     .catch(err => { console.error(err); });
+
+        return fetch(completeAPIURL)
+            // response.ok if response.status >= 200 && response.status < 300
             .then(response => response.ok ? response : (function () { throw response }()))
-            .then(JSON.stringify)
+            .then(response => response.json())
             .then(console.log)
+            //.then(jsonResponse => constructMessage(jsonResponse))
+            //.then(objectMessage => { console.log(objectMessage); return objectMessage; })
+            //.then(JSON.stringify)
             //.then(publishMessage)
-            .catch(err => { console.error(err); });
+            //.catch(err => { logger.error(err); throw Error("Bad response from AccuWeather API!"); });
+            //.catch(err => { console.error(err); throw Error("Bad response from AccuWeather API!"); });
+            //.catch(err => { logger.error(err); throw err; });
+            .catch(err => { logger.error(err); });
+
+
 
         // TODO: include error handling!
         //TODO check for more than one result, i.e., the array size is greater than 1
@@ -67,4 +92,5 @@ setInterval(() => {
     // Read location keys in from file here so that they can be reloaded after each interval.
     logger.info('Processing location keys. intervalCount=' + ++intervalCount);
     processLocationKeys(locationKeysJSON, accuWeatherGetCurrentConditionsURL, accuWeatherAPIKey);
+    logger.info('XXXXXXXXXXXXXX');
 }, samplingInterval_ms);
