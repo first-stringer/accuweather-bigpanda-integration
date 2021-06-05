@@ -12,16 +12,22 @@ const configurationPropertiesFileName = process.argv[2];
 const locationKeysFileName = process.argv[3];
 logger.debug('configurationPropertiesFileName=' + configurationPropertiesFileName);
 const configurationProperties = propertiesReader(configurationPropertiesFileName);
-var samplingInterval_ms = configurationProperties.get('sampling-interval-ms');
+var samplingInterval_ms = configurationProperties.get('SAMPLING-INTERVAL-MS');
 logger.debug('samplingInterval_ms=' + samplingInterval_ms);
-const accuWeatherGetCurrentConditionsURL = configurationProperties.get('accuweather.get-current-conditions-url');
+const accuWeatherGetCurrentConditionsURL = configurationProperties.get('ACCUWEATHER.GET-CURRENT-CONDITIONS-URL');
 logger.debug('accuWeatherGetCurrentConditionsURL=' + accuWeatherGetCurrentConditionsURL);
 const accuWeatherAPIKey = process.env.ACCUWEATHER_API_KEY;
 logger.debug('accuWeatherAPIKey=' + accuWeatherAPIKey);
+const queueURL = configurationProperties.get('SQS.QUEUE-URL');
+logger.debug('queueURL=' + queueURL);
+const region = configurationProperties.get('SQS.REGION');
+logger.debug('region=' + region);
 
 const producer = Producer.create({
-    queueUrl: 'https://sqs.us-east-2.amazonaws.com/421973658829/ccuweather-bigpanda-integration',
-    region: 'us-east-2'
+    //queueUrl: 'https://sqs.us-east-2.amazonaws.com/421973658829/ccuweather-bigpanda-integration',
+    queueUrl: queueURL,
+    //region: 'us-east-2'
+    region: region
 });
 
 async function processLocationKeys(locationKeys, apiURL, apiKey) {
