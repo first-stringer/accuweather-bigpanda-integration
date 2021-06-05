@@ -24,9 +24,7 @@ const region = configurationProperties.get('SQS.REGION');
 logger.debug('region=' + region);
 
 const producer = Producer.create({
-    //queueUrl: 'https://sqs.us-east-2.amazonaws.com/421973658829/ccuweather-bigpanda-integration',
     queueUrl: queueURL,
-    //region: 'us-east-2'
     region: region
 });
 
@@ -59,4 +57,3 @@ setInterval(() => {
     logger.info('Processing location keys. intervalCount=' + ++intervalCount);
     processLocationKeys(locationKeysJSON, accuWeatherGetCurrentConditionsURL, accuWeatherAPIKey);
 }, samplingInterval_ms);
-
