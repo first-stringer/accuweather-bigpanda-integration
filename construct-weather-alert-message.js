@@ -2,16 +2,13 @@
 
 const WeatherMessage = require('./weather-alert-message');
 
-module.exports = function constructMessage(weatherJSONArray) {
+module.exports = function constructMessage(weatherJSON) {
     //TODO: Check if this is an array first!
-    //logger.debug("constructMessage weatherJSONArray=" + weatherJSONArray);
-    console.log("constructMessage weatherJSONArray=" + weatherJSONArray);
-    //logger.debug("weatherJSONArray.length=" + weatherJSONArray.length);
-    console.log("weatherJSONArray.length=" + weatherJSONArray.length);
-    if (weatherJSONArray.length > 1) throw Error;
+    //logger.debug("constructMessage weatherJSON=" + weatherJSON);
+    console.log("constructMessage weatherJSON=" + JSON.stringify(weatherJSON));
 
-    let weatherJSON = weatherJSONArray[0];
     let link = weatherJSON.Link;
+    console.log("link=" + link);
     let linkTokens = link.split("/");
     let locationKey = linkTokens[8].substring(0, linkTokens[8].indexOf("?"));
     //logger.debug("weatherJSON.HasPrecipitation=" + weatherJSON.HasPrecipitation);
