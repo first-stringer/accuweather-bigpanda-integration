@@ -31,20 +31,27 @@ const producer = Producer.create({
 async function processLocationKeys(locationKeys, apiURL, apiKey) {
     Object.keys(locationKeysJSON).forEach(function (key) {
         logger.debug("processLocationKeys-key=" + key);
-        var value = locationKeysJSON[key];
+        let value = locationKeysJSON[key];
         logger.debug("processLocationKeys-value.CityName=" + value.CityName);
         logger.debug("processLocationKeys-value.LocationKey=" + value.LocationKey);
 
         let completeAPIURL = apiURL + value.LocationKey + "?apikey=" + apiKey;
         logger.debug('processLocationKeys-completeAPIURL=' + completeAPIURL);
 
-        let message = { id: uuidv4(), body: "", messageAttributes: { cityName: { DataType: 'String', StringValue: value.CityName } } };
+        let message = {
+            id: uuidv4(),
+            body: "",
+            messageAttributes: { cityName: { DataType: 'String', StringValue: value.CityName } }
+        };
         return fetch(completeAPIURL)
             // response.ok if response.status >= 200 && response.status < 300
             .then(response => response.ok ? response : (function () { throw response }()))
             .then(response => response.json())
-            //.then(json => { messageBody.body = JSON.stringify(json[0]); producer.send(messageBody); })
-            .then(json => { message.body = JSON.stringify(json[0]); logger.debug(JSON.stringify(message, null, " ")); return message; })
+            .then(json => {
+                message.body = JSON.stringify(json[0]);
+                logger.debug("processLocationKeys-message=" + JSON.stringify(message, null, " "));
+                return message;
+            })
             .then(message => producer.send(message))
             .catch(response => {
                 logger.error(response.status + " " + response.statusText);
@@ -52,8 +59,8 @@ async function processLocationKeys(locationKeys, apiURL, apiKey) {
     });
 }
 
-var intervalCount = 0;
-var locationKeysJSON = require(locationKeysFileName);
+let intervalCount = 0;
+let locationKeysJSON = require(locationKeysFileName);
 setInterval(() => {
     // Read location keys in from file here so that they can be reloaded after each interval.
     logger.info('Processing location keys. intervalCount=' + ++intervalCount);

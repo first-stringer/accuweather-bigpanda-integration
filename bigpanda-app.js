@@ -15,7 +15,7 @@ logger.debug('queueURL=' + queueURL);
 
 const bigPandaAppKey = process.env.BIGPANDA_APP_KEY;
 
-var messagesProcessedCount = 0;
+let messagesProcessedCount = 0;
 const app = Consumer.create({
     queueUrl: queueURL,
     messageAttributeNames: ['cityName'],

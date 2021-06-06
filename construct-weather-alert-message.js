@@ -13,7 +13,7 @@ module.exports = function constructMessage(cityName, weatherJSON, appKey) {
     let locationKey = linkTokens[8].substring(0, linkTokens[8].indexOf("?"));
     logger.debug("constructMessage weatherJSON.HasPrecipitation=" + weatherJSON.HasPrecipitation);
 
-    const weatherMessage = new WeatherMessage();
+    let weatherMessage = new WeatherMessage();
     weatherMessage.app_key = appKey;
     //weatherMessage.host = linkTokens[5] + "#" + linkTokens[6];
     weatherMessage.host = cityName;
