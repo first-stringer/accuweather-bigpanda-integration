@@ -5,7 +5,7 @@ const { Consumer } = require('sqs-consumer');
 
 const logger = require('./utilities/logger');
 const constructWeatherAlertMessage = require('./construct-weather-alert-message');
-const WeatherMessage = require('./weather-alert-message');
+const WeatherAlertMessage = require('./weather-alert-message');
 
 const configurationPropertiesFileName = process.argv[2];
 logger.debug('configurationPropertiesFileName=' + configurationPropertiesFileName);
@@ -42,10 +42,12 @@ const app = Consumer.create({
 });
 
 app.on('error', (err) => {
+    logger.error("error");
     logger.error(err.message);
 });
 
 app.on('processing_error', (err) => {
+    logger.error("processing_error");
     logger.error(err.message);
 });
 
