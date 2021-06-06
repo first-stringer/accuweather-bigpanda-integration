@@ -9,5 +9,8 @@
     "sqs-producer": "^2.1.0",
     "uuid": "^3.3.2",
     "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0"
   }
 }

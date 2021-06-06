@@ -37,7 +37,7 @@ const app = Consumer.create({
         logger.debug("weatherAlertMessage=" + JSON.stringify(weatherAlertMessage, null, " "));
 
         // Code added to demonstrate working dead letter queue
-        if (weatherAlertMessage.location_key == 1178447 || weatherAlertMessage.location_key == 1162619) throw Error("Retry-able Error");
+        if (weatherAlertMessage.location_key == 1178447) throw Error("Retry-able Error");
         //TODO: Add if statement here to fail some messages so they go to the dead letter queue
         //TODO: Call BigPanda service.
     }

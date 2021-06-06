@@ -3,8 +3,17 @@
 const { createLogger, format, transports } = require('winston');
 const { combine, splat, timestamp, printf } = format;
 
+var options = {
+    timeZone: "America/Chicago",
+    year: 'numeric', month: 'numeric', day: 'numeric',
+    hour: 'numeric', minute: 'numeric', second: 'numeric'
+};
+
+var formatter = new Intl.DateTimeFormat([], options);
+
 const myFormat = printf(({ level, message, timestamp, ...metadata }) => {
-    let msg = `${timestamp} [${level}] : ${message} `
+    //let msg = `${timestamp} [${level}] : ${message} `
+    let msg = formatter.format(new Date(timestamp)) + " [" + level + "] :" + message;
     // if (metadata) {
     //     msg += JSON.stringify(metadata)
     // }
