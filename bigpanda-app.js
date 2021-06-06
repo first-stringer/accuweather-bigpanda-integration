@@ -13,17 +13,23 @@ const configurationProperties = propertiesReader(configurationPropertiesFileName
 const queueURL = configurationProperties.get('SQS.QUEUE-URL');
 logger.debug('queueURL=' + queueURL);
 
+const bigPandaAppKey = process.env.BIGPANDA_APP_KEY;
+
 var messagesProcessedCount = 0;
 const app = Consumer.create({
     queueUrl: queueURL,
+    messageAttributeNames: ['cityName'],
     handleMessage: async (message) => {
         ++messagesProcessedCount;
         logger.info("messagesProcessedCount=" + messagesProcessedCount);
-        logger.debug(JSON.stringify(message, null, "  "));
-        logger.debug(JSON.stringify(message.Body, null, "  "));
-        logger.debug(message.Body);
-        let wm = constructWeatherAlertMessage(JSON.parse(message.Body));
-        logger.debug("wm=" + JSON.stringify(wm, null, " "));
+        logger.debug(JSON.stringify(message, null, " "));
+        //logger.debug(JSON.stringify(message.MessageAttributes, null, " "));
+        //logger.debug(JSON.stringify(message.MessageAttributes.cityName, null, " "));
+        let cityName = message.MessageAttributes.cityName.StringValue;
+        logger.debug("cityName=" + cityName);
+        logger.debug(JSON.stringify(message.Body, null, " "));
+        let weatherMessage = constructWeatherAlertMessage(cityName, JSON.parse(message.Body), bigPandaAppKey);
+        logger.debug("weatherMessage=" + JSON.stringify(weatherMessage, null, " "));
 
         //TODO: Add if statement here to fail some messages so they go to the dead letter queue
         //TODO: Call BigPanda service.

@@ -1,21 +1,23 @@
-//const logger = require('./utilities/logger');
+'use strict';
+
+const logger = require('./utilities/logger');
 
 const WeatherMessage = require('./weather-alert-message');
 
-module.exports = function constructMessage(weatherJSON) {
-    //TODO: Check if this is an array first!
-    //logger.debug("constructMessage weatherJSON=" + weatherJSON);
-    console.log("constructMessage weatherJSON=" + JSON.stringify(weatherJSON));
+module.exports = function constructMessage(cityName, weatherJSON, appKey) {
+    logger.debug("constructMessage weatherJSON=" + JSON.stringify(weatherJSON, null, " "));
 
     let link = weatherJSON.Link;
-    console.log("link=" + link);
+    logger.debug("constructMessage link=" + link);
     let linkTokens = link.split("/");
     let locationKey = linkTokens[8].substring(0, linkTokens[8].indexOf("?"));
-    //logger.debug("weatherJSON.HasPrecipitation=" + weatherJSON.HasPrecipitation);
-    console.log("weatherJSON.HasPrecipitation=" + weatherJSON.HasPrecipitation);
+    logger.debug("constructMessage weatherJSON.HasPrecipitation=" + weatherJSON.HasPrecipitation);
 
     const weatherMessage = new WeatherMessage();
-    weatherMessage.host = linkTokens[5] + "#" + linkTokens[6];
+    weatherMessage.app_key = appKey;
+    //weatherMessage.host = linkTokens[5] + "#" + linkTokens[6];
+    weatherMessage.host = cityName;
+    weatherMessage.postal_code = linkTokens[6];
     weatherMessage.check = "Weather Check";
     weatherMessage.incident_identifier =
         locationKey + weatherJSON.EpochTime + Math.floor(Math.random() * 1000000);
@@ -31,5 +33,6 @@ module.exports = function constructMessage(weatherJSON) {
     weatherMessage.local_time = weatherJSON.LocalObservationDateTime;
     weatherMessage.epoch_time = weatherJSON.EpochTime
 
+    logger.debug("constructMessage weatherMessage=" + JSON.stringify(weatherMessage, null, " "));
     return weatherMessage;
 }

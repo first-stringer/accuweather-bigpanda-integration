@@ -1,6 +1,7 @@
 module.exports = class WeatherAlertMessage {
-    api_key;
+    app_key;
     host;
+    postal_code;
     check;
     incident_identifier;
     description;

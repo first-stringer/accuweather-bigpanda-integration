@@ -38,12 +38,14 @@ async function processLocationKeys(locationKeys, apiURL, apiKey) {
         let completeAPIURL = apiURL + value.LocationKey + "?apikey=" + apiKey;
         logger.debug('processLocationKeys-completeAPIURL=' + completeAPIURL);
 
-        let messageBody = { id: uuidv4(), body: "" };
+        let message = { id: uuidv4(), body: "", messageAttributes: { cityName: { DataType: 'String', StringValue: value.CityName } } };
         return fetch(completeAPIURL)
             // response.ok if response.status >= 200 && response.status < 300
             .then(response => response.ok ? response : (function () { throw response }()))
             .then(response => response.json())
-            .then(json => { messageBody.body = JSON.stringify(json[0]); producer.send(messageBody); })
+            //.then(json => { messageBody.body = JSON.stringify(json[0]); producer.send(messageBody); })
+            .then(json => { message.body = JSON.stringify(json[0]); logger.debug(JSON.stringify(message, null, " ")); return message; })
+            .then(message => producer.send(message))
             .catch(response => {
                 logger.error(response.status + " " + response.statusText);
             });
