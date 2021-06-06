@@ -12,8 +12,13 @@ logger.debug('configurationPropertiesFileName=' + configurationPropertiesFileNam
 const configurationProperties = propertiesReader(configurationPropertiesFileName);
 const queueURL = configurationProperties.get('SQS.QUEUE-URL');
 logger.debug('queueURL=' + queueURL);
+const bigPandaAlertsAPIEndPoint = configurationProperties.get('BIGPANDA.ALERTS-API-ENDPOINT');
+logger.debug('bigPandaAlertsAPIEndPoint=' + bigPandaAlertsAPIEndPoint);
 
 const bigPandaAppKey = process.env.BIGPANDA_APP_KEY;
+logger.debug('bigPandaAppKey=' + bigPandaAppKey);
+const bigPandaAlertsAPIBearerToken = process.env.BIGPANDA_ALERTS_API_BEARER_TOKEN;
+//logger.debug('bigPandaAlertsAPIBearerToken=' + bigPandaAlertsAPIBearerToken);
 
 let messagesProcessedCount = 0;
 const app = Consumer.create({
