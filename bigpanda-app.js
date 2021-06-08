@@ -2,6 +2,7 @@
 
 const propertiesReader = require('properties-reader');
 const { Consumer } = require('sqs-consumer');
+const fetch = require('node-fetch');
 
 const logger = require('./utilities/logger');
 const constructWeatherAlertMessage = require('./construct-weather-alert-message');
@@ -38,8 +39,16 @@ const app = Consumer.create({
 
         // Code added to demonstrate working dead letter queue
         if (weatherAlertMessage.location_key == 1178447 || weatherAlertMessage.location_key == 1162619) throw Error("Retry-able Error");
-        //TODO: Add if statement here to fail some messages so they go to the dead letter queue
-        //TODO: Call BigPanda service.
+
+
+        fetch(bigPandaAlertsAPIEndPoint, {
+            method: 'post',
+            body: JSON.stringify(weatherAlertMessage),
+            headers: { 'Authorization': `Bearer ${bigPandaAlertsAPIBearerToken}`, 'Content-Type': 'application/json' },
+        })
+            .then(res => res.json())
+            .then(res =>  console.log(res))
+            .catch(err => console.error(err));
     }
 });
 

@@ -1,13 +1,13 @@
 'use strict';
 
-// Public modules
+// Load modules in order used
 const logger = require('./utilities/logger');
 const propertiesReader = require('properties-reader');
 const fetch = require('node-fetch');
 const { v4: uuidv4 } = require('uuid');
 const { Producer } = require('sqs-producer');
 
-// Load all properties
+// Load properties from config file 
 const configurationPropertiesFileName = process.argv[2];
 const locationKeysFileName = process.argv[3];
 logger.debug('configurationPropertiesFileName=' + configurationPropertiesFileName);
@@ -28,7 +28,13 @@ const producer = Producer.create({
     region: region
 });
 
-async function processLocationKeys(locationKeys, apiURL, apiKey) {
+/**
+* Iterates over a list of location keys consuming the AccuWeather API and publishing each response to a queue.
+* @param {String[]} locationKeys - The location keys to query on and publish
+* @param {String} apiURL - The alert to send
+* @param {String} apiKey - The alert to send
+*/
+function processLocationKeys(locationKeys, apiURL, apiKey) {
     Object.keys(locationKeysJSON).forEach(function (key) {
         logger.debug("processLocationKeys-key=" + key);
         let value = locationKeysJSON[key];
@@ -43,7 +49,7 @@ async function processLocationKeys(locationKeys, apiURL, apiKey) {
             body: "",
             messageAttributes: { cityName: { DataType: 'String', StringValue: value.CityName } }
         };
-        return fetch(completeAPIURL)
+        fetch(completeAPIURL)
             // response.ok if response.status >= 200 && response.status < 300
             .then(response => response.ok ? response : (function () { throw response }()))
             .then(response => response.json())
@@ -54,7 +60,8 @@ async function processLocationKeys(locationKeys, apiURL, apiKey) {
             })
             .then(message => producer.send(message))
             .catch(response => {
-                logger.error(response.status + " " + response.statusText);
+                logger.error("Response: " + response);
+                logger.error("Response Status: " + response.status + ", Response Status Text: " + response.statusText);
             });
     });
 }
@@ -62,7 +69,6 @@ async function processLocationKeys(locationKeys, apiURL, apiKey) {
 let intervalCount = 0;
 let locationKeysJSON = require(locationKeysFileName);
 setInterval(() => {
-    // Read location keys in from file here so that they can be reloaded after each interval.
     logger.info('Processing location keys. intervalCount=' + ++intervalCount);
     processLocationKeys(locationKeysJSON, accuWeatherGetCurrentConditionsURL, accuWeatherAPIKey);
 }, samplingInterval_ms);

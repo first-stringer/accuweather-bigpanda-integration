@@ -29,7 +29,7 @@ module.exports = function constructWeatherAlertMessage(cityName, weatherJSON, ap
     weatherAlertMessage.condition = weatherJSON.WeatherText;
     weatherAlertMessage.link = weatherJSON.Link;
     weatherAlertMessage.location_key = locationKey;
-    weatherAlertMessage.status = "NORMAL";
+    weatherAlertMessage.status = "warning";
     weatherAlertMessage.local_time = weatherJSON.LocalObservationDateTime;
     weatherAlertMessage.epoch_time = weatherJSON.EpochTime
 
