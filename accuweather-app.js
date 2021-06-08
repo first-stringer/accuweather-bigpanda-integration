@@ -1,5 +1,3 @@
-'use strict';
-
 // Load modules in order used
 const logger = require('./utilities/logger');
 const propertiesReader = require('properties-reader');
@@ -7,7 +5,7 @@ const fetch = require('node-fetch');
 const { v4: uuidv4 } = require('uuid');
 const { Producer } = require('sqs-producer');
 
-// Load properties from config file 
+// Load configuration and location keys from file names specified on the command line and environment variables
 const configurationPropertiesFileName = process.argv[2];
 const locationKeysFileName = process.argv[3];
 logger.debug('configurationPropertiesFileName=' + configurationPropertiesFileName);
@@ -23,6 +21,7 @@ logger.debug('queueURL=' + queueURL);
 const region = configurationProperties.get('SQS.REGION');
 logger.debug('region=' + region);
 
+// Create SQS queue client for publishing 
 const producer = Producer.create({
     queueUrl: queueURL,
     region: region
@@ -66,8 +65,11 @@ function processLocationKeys(locationKeys, apiURL, apiKey) {
     });
 }
 
+// Keep track of how many times location keys are processed
 let intervalCount = 0;
 let locationKeysJSON = require(locationKeysFileName);
+
+// Process location keys every sampling interval duration in milliseconds
 setInterval(() => {
     logger.info('Processing location keys. intervalCount=' + ++intervalCount);
     processLocationKeys(locationKeysJSON, accuWeatherGetCurrentConditionsURL, accuWeatherAPIKey);
