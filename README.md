@@ -23,13 +23,23 @@ An integration that sends weather data from AccuWeather for a list of locations 
          `}`
 
 
-1) Run "*node node accuweather-app.js accuweather-app-config.properties ./accuweather-app-all-location-keys.json*" to continuously request data from AccuWeather and publish it to an SQS queue.
+1) To continuously request data from AccuWeather and publish it to an SQS queue run:
+   
+    `"node accuweather-app.js accuweather-app-config.properties ./accuweather-app-all-location-keys.json" `
 
-2) Run "*node bigpanda-app.js bigpanda-app-config.properties*" to continuously consume messages from the SQS queue, transform them into BigPanda alerts, and call the BigPanda alerts API.  If a message fails to be processed it will be place back on the SQS queue for a maximum of ten times at which point it will be moved to an SQS dead letter queue.
+2) To continuously consume messages from the SQS queue, transform them into BigPanda alerts, and call the BigPanda alerts API run:  
+
+   ` "node bigpanda-app.js bigpanda-app-config.properties"` 
+
+    If a message fails to be processed it will be place back on the SQS queue for a maximum of ten times at which point it will be moved to an SQS dead letter queue.
 
     **If no messages are published to the queue for more than one minute an email notification is sent via AWS Cloudwatch and an AWS SNS topic.**
 
-3) Run "*node bigpanda-app-failed-messages.js bigpanda-app-failed-messages-config.properties*" to continuously consume messages from the SQS dead letter queue, transform them into BigPanda alerts, and call the BigPanda alerts API.  If a message fails to be processed it will be place back on the SQS queue for a maximum of ten times at which point it will be logged to the failed messages log file.
+3) To continuously consume messages from the SQS dead letter queue, transform them into BigPanda alerts, and call the BigPanda alerts API run: 
+
+    `"node bigpanda-app-failed-messages.js bigpanda-app-failed-messages-config.properties"`
+
+    If a message fails to be processed it will be place back on the SQS queue for a maximum of ten times at which point it will be logged to the failed messages log file.
 
     **If a message is published to the dead letter queue an email notification is sent via AWS CloudWatch and an AWS SNS topic.**
 
@@ -41,4 +51,4 @@ Next Steps:
 5) Research if it is possible to make the AWS SNS topic destination email configurable from the queue consumer applications. 
 5) Research if it is possible to make the AWS CloudWatch thresholds (ie. times and counts) configurable from a Node.js application.
 6) Reload the location keys file each iteration.
-7) Develop a React application and Express web application to add and delete location keys to and from the location keys file.
+7) Develop a React and Node.js web application to add and delete location keys to and from the location keys file.
