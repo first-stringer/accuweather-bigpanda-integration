@@ -53,7 +53,7 @@ Three Node.js applications that send weather data for a list of locations from A
 
     **If a message is published to the dead letter queue an email notification is sent via AWS CloudWatch and an AWS SNS topic.**
 
-Next Steps:
+## Next Steps:
 1) Fully develop `weather-alert-message.js` by creating and then extending a general BigPanda alerts class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
 2) Extract AccuWeather and BigPandi Get and Post API calls into general API calls class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
 3) Run ESLint and address any issues discovered.
