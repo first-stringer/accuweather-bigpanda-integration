@@ -1,3 +1,5 @@
+.DS_Store
+
 # Files with passwords or API keys
 *private.*
 .envrc
