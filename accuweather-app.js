@@ -1,4 +1,3 @@
-// Load modules in order used
 const logger = require('./utilities/logger');
 const propertiesReader = require('properties-reader');
 const fetch = require('node-fetch');

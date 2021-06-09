@@ -1,4 +1,3 @@
-// Load modules in order used
 const propertiesReader = require('properties-reader');
 const { Consumer } = require('sqs-consumer');
 const fetch = require('node-fetch');
@@ -12,6 +11,8 @@ logger.debug('configurationPropertiesFileName=' + configurationPropertiesFileNam
 const configurationProperties = propertiesReader(configurationPropertiesFileName);
 const queueURL = configurationProperties.get('SQS.QUEUE-URL');
 logger.debug('queueURL=' + queueURL);
+const pollingWaitTimeMs = configurationProperties.get('SQS.POLLING-WAIT-TIME-MS');
+logger.debug('pollingWaitTimeMs=' + pollingWaitTimeMs);
 const bigPandaAlertsAPIEndPoint = configurationProperties.get('BIGPANDA.ALERTS-API-ENDPOINT');
 logger.debug('bigPandaAlertsAPIEndPoint=' + bigPandaAlertsAPIEndPoint);
 const bigPandaAppKey = process.env.BIGPANDA_APP_KEY;
@@ -25,13 +26,12 @@ let messagesProcessedCount = 0;
 // Create and configure message consumer.
 const app = Consumer.create({
     queueUrl: queueURL,
+    pollingWaitTimeMs: pollingWaitTimeMs,
     messageAttributeNames: ['cityName'],
     handleMessage: async (message) => {
         ++messagesProcessedCount;
         logger.info("messagesProcessedCount=" + messagesProcessedCount);
         logger.debug(JSON.stringify(message, null, " "));
-        //logger.debug(JSON.stringify(message.MessageAttributes, null, " "));
-        //logger.debug(JSON.stringify(message.MessageAttributes.cityName, null, " "));
         // Pull the city name out of the message attribute so we can add it to the BigPanda alert as a custom tag
         let cityName = message.MessageAttributes.cityName.StringValue;
         logger.debug("cityName=" + cityName);
@@ -65,14 +65,14 @@ const app = Consumer.create({
 
 // Deal with errors that occur while consuming the message from the queue
 app.on('error', (err) => {
-    logger.error("error");
+    logger.error("Error occurred while interacting with the queue.");
     logger.error(err.message);
     // TODO: Add logic to handle transient and intransient errors differently
 });
 
 // Deal with errors that occur while handling the message successfully retrieved from the queue
 app.on('processing_error', (err) => {
-    logger.error("processing_error");
+    logger.error("Processing error occurred while processing the message.");
     logger.error(err.message);
     // TODO: Add logic to handle transient and intransient errors differently
 });
