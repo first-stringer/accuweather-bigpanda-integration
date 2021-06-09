@@ -1,5 +1,3 @@
-'use strict';
-
 const logger = require('./utilities/logger');
 
 const WeatherAlertMessage = require('./weather-alert-message');
