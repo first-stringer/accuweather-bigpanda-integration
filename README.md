@@ -1,6 +1,6 @@
 # AccuWeather Integration for BigPanda
 
-Three Node.js applications that send weather data for a list of locations from AccuWeather to BigPanda as alerts via AWS SQS queues.
+Three Node.js applications that Get weather data for a list of locations from AccuWeather, publish the AccuWeather data to AWS SQS queues, consume AccuWeather data from AWS SQS queues, transform and enhance the AccuWeather data into BigPanda alert payloads, and Post the alert payloads to the BigPanda alerts API writing any unprocessable alerts to a failed messages file.
 
 
 ![AccuWeather Big Panda Diagram](./AccuWeather-BigPanda-Diagram.png "AccuWeather-BigPanda-Diagram.png").
