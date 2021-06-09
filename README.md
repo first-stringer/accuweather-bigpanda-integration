@@ -1,7 +1,6 @@
 # AccuWeather Integration for BigPanda
 
-An integration that sends weather data from AccuWeather for a list of locations to BigPanda.
-
+Three Node.js applications that send weather data for a list of locations from AccuWeather to BigPanda as alerts via AWS SQS queues.
 
 0) https://direnv.net is used to manage the below environment variables in an .envrc file.
 
