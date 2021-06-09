@@ -56,10 +56,11 @@ Three Node.js applications that send weather data for a list of locations from A
 Next Steps:
 1) Fully develop `weather-alert-message.js` by creating and then extending a general BigPanda alerts class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
 2) Extract AccuWeather and BigPandi Get and Post API calls into general API calls class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
-3) Extract queue publishing and consuming Get and Post API calls into general API calls class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
-4) Use Chai and Nock to test the generalized BigPanda alerts, service invoker, and queue publisher/consumer classes.
-5) Research if it is possible to make the AWS SNS topic destination email configurable from the queue consumer applications. 
-6) Research if it is possible to make the AWS CloudWatch thresholds (ie. times and counts) configurable from a Node.js application.
-7) Reload the location keys file each iteration.
-8) Develop a React and Node.js web application to add and delete location keys to and from the location keys file.
-9) Refactor `logger.js` to accept a file name as a constructor argument.
+3) Run ESLint and address any issues discovered.
+4) Extract queue publishing and consuming Get and Post API calls into general API calls class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
+5) Use Chai and Nock to test the generalized BigPanda alerts, service invoker, and queue publisher/consumer classes.
+6) Research if it is possible to make the AWS SNS topic destination email configurable from the queue consumer applications. 
+7) Research if it is possible to make the AWS CloudWatch thresholds (ie. times and counts) configurable from a Node.js application.
+8) Reload the location keys file each iteration.
+9) Develop a React and Node.js web application to add and delete location keys to and from the location keys file.
+10) Refactor `logger.js` to accept a file name as a constructor argument.
