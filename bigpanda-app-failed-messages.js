@@ -75,12 +75,14 @@ const app = Consumer.create({
     }
 });
 
+// Deal with errors that occur while consuming the message from the queue
 app.on('error', (err) => {
     logger.error("Error occurred while interacting with the queue.");
     logger.error(err.message);
     // TODO: Add logic to handle transient and intransient errors differently
 });
 
+// Deal with errors that occur while handling the message successfully retrieved from the queue
 app.on('processing_error', (err) => {
     logger.error("Processing error occurred while processing the message.");
     logger.error(err.message);
