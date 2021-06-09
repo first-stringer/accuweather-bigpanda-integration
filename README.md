@@ -22,16 +22,15 @@ Three Node.js applications that send weather data for a list of locations from A
          `}`
 
    Other Dependencies:
-    1) An AccuWeather API URL.
-    2) An AccuWeather API KEY.
-    3) An AWS ACCESS KEY ID.
-    4) An AWS SECRET ACCESS KEY.
-    5) An AWS SQS queue (configured in `accuweather-app-config.properties` and `bigpanda-app-config.properties` files).
-    6) An AWS SQS dead letter queue (configured in `bigpanda-app-failed-messages-config.properties` file).
-    7) A BigPanda account.
-    8) A BigPanda API alerts endpoint URL.
-    9) A BigPanda APP KEY.
-    10) A BigPanda BEARER TOKEN.
+    1) An AccuWeather API URL
+    2) An AccuWeather API KEY
+    3) An AWS ACCESS KEY ID
+    4) An AWS SECRET ACCESS KEY
+    5) An AWS SQS queue (configured in `accuweather-app-config.properties` and `bigpanda-app-config.properties` files)
+    6) An AWS SQS dead letter queue (configured in `bigpanda-app-failed-messages-config.properties` file)
+    7) A BigPanda API alerts endpoint URL
+    8) A BigPanda APP KEY
+    9) A BigPanda BEARER TOKEN
 
 
 1) To continuously request data from AccuWeather and publish it to an SQS queue run:
