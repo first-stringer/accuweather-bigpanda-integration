@@ -3,6 +3,7 @@
 # Files with passwords or API keys
 *private.*
 .envrc
+rootkey.csv
 
 # Logs
 logs
