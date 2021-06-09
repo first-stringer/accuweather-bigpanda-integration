@@ -25,11 +25,11 @@ An integration that sends weather data from AccuWeather for a list of locations 
 
 1) To continuously request data from AccuWeather and publish it to an SQS queue run:
    
-    `"node accuweather-app.js accuweather-app-config.properties ./accuweather-app-all-location-keys.json" `
+    `node accuweather-app.js accuweather-app-config.properties ./accuweather-app-all-location-keys.json`
 
 2) To continuously consume messages from the SQS queue, transform them into BigPanda alerts, and call the BigPanda alerts API run:  
 
-   ` "node bigpanda-app.js bigpanda-app-config.properties"` 
+   `node bigpanda-app.js bigpanda-app-config.properties` 
 
     If a message fails to be processed it will be place back on the SQS queue for a maximum of ten times at which point it will be moved to an SQS dead letter queue.
 
@@ -37,7 +37,7 @@ An integration that sends weather data from AccuWeather for a list of locations 
 
 3) To continuously consume messages from the SQS dead letter queue, transform them into BigPanda alerts, and call the BigPanda alerts API run: 
 
-    `"node bigpanda-app-failed-messages.js bigpanda-app-failed-messages-config.properties"`
+    `node bigpanda-app-failed-messages.js bigpanda-app-failed-messages-config.properties`
 
     If a message fails to be processed it will be place back on the SQS queue for a maximum of ten times at which point it will be logged to the failed messages log file.
 
