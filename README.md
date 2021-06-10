@@ -52,7 +52,7 @@ Three Node.js applications that Get weather data for a list of locations from Ac
 
     `node bigpanda-app-failed-messages.js bigpanda-app-failed-messages-config.properties`
 
-    If a message fails to be processed it will be placed back on the SQS queue for a maximum of ten times at which point it will be logged to the failed messages log file.
+    If a message fails to be processed it will be placed back on the SQS dead letter queue for a maximum of ten times at which point it will be logged to the failed messages log file.
 
     **If a message is published to the dead letter queue an email notification is sent via AWS CloudWatch and an AWS SNS topic.**
 
@@ -60,7 +60,7 @@ Three Node.js applications that Get weather data for a list of locations from Ac
 1) Fully develop `weather-alert-message.js` by creating and then extending a general BigPanda alerts class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
 2) Extract AccuWeather and BigPandi Get and Post API calls into general API calls class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
 3) Run ESLint and address any issues discovered.
-4) Extract queue publishing and consuming Get and Post API calls into general API calls class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
+4) Extract queue publishing and consuming calls into general class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
 5) Use Chai and Nock to test the generalized BigPanda alerts, service invoker, and queue publisher/consumer classes.
 6) Research if it is possible to make the AWS SNS topic destination email configurable from the queue consumer applications. 
 7) Research if it is possible to make the AWS CloudWatch thresholds (ie. times and counts) configurable from a Node.js application.
