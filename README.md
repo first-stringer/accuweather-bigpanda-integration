@@ -61,7 +61,7 @@ Three Node.js applications that Get weather data for a list of locations from Ac
 2) Extract AccuWeather and BigPandi Get and Post API calls into general API calls class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
 3) Run ESLint and address any issues discovered.
 4) Extract queue publishing and consuming calls into general class which is fully developed e.g., with a constructor, getters, and setters, modular, and testable.
-5) Use Chai and Nock to test the generalized BigPanda alerts, service invoker, and queue publisher/consumer classes.
+5) Use Mocha, Chai, and Nock to test the generalized BigPanda alerts, service invoker, and queue publisher/consumer classes.
 6) Research if it is possible to make the AWS SNS topic destination email configurable from the queue consumer applications. 
 7) Research if it is possible to make the AWS CloudWatch thresholds (ie. times and counts) configurable from a Node.js application.
 8) Reload the location keys file each iteration.
