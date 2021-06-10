@@ -44,7 +44,7 @@ Three Node.js applications that Get weather data for a list of locations from Ac
 
    `node bigpanda-app.js bigpanda-app-config.properties` 
 
-    If a message fails to be processed it will be placed back on the SQS queue for a maximum of ten times at which point it will be moved to an SQS dead letter queue.
+    If a message fails to be processed it will be placed back on the SQS queue for a maximum of five times at which point it will be moved to an SQS dead letter queue.
 
     **If no messages are published to the queue for more than one minute an email notification is sent via AWS Cloudwatch and an AWS SNS topic.**
 
